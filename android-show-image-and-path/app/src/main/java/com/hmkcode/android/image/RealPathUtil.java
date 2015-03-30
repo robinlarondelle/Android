@@ -7,11 +7,15 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 public class RealPathUtil {
 
 	@SuppressLint("NewApi")
 	public static String getRealPathFromURI_API19(Context context, Uri uri){
+
+        Log.d("HMKCODE", "getRealPathFromURI_API19 " + uri);
+
 		String filePath = "";
 		String wholeID = DocumentsContract.getDocumentId(uri);
 

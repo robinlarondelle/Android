@@ -43,6 +43,6 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_below="@+id/txtRealPath"
-         android:src="@drawable/abc_ab_bottom_solid_light_holo" />
+         android:src="@drawable/ic_drawer"/>
      
 </RelativeLayout>

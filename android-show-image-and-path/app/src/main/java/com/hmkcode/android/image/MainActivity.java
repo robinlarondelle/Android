@@ -24,6 +24,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button btnSelectImage;
 	TextView txtUriPath,txtRealPath;
 	ImageView imageView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,27 +39,31 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		// add click listener to button
 		btnSelectImage.setOnClickListener(this);
-		
-		
 	}
 	
 	@Override
 	public void onClick(View view) {
-		
-		// 1. on Upload click call ACTION_GET_CONTENT intent
+        Log.d("HMKCODE", "onClick called");
+
+        // 1. on Upload click call ACTION_GET_CONTENT intent
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		// 2. pick image only
         intent.setType("image/*");
         // 3. start activity
+        Log.d("HMKCODE", "onClick calling ActivityForResult");
+
         startActivityForResult(intent, 0);
-		
+        Log.d("HMKCODE", "onClick done ActivityForResult");
+
         // define onActivityResult to do something with picked image 
 	}
 	
 	
 	@Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
-		if(resCode == Activity.RESULT_OK && data != null){
+        Log.d("HMKCODE", "onActivityResult Buildversion " + Build.VERSION.SDK_INT + " " + data.getData());
+
+        if(resCode == Activity.RESULT_OK && data != null){
 			String realPath;
 			// SDK < API11
 			if (Build.VERSION.SDK_INT < 11)
@@ -69,10 +74,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
 			
 			// SDK > 19 (Android 4.4)
-			else
-	            realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
-				
-			
+			else {
+                // API19-version does not work ...
+                // realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
+                realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
+            }
+
 			setTextViews(Build.VERSION.SDK_INT, data.getData().getPath(),realPath);
 		}
     }
